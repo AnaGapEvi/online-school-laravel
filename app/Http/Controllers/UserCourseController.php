@@ -26,16 +26,13 @@ class UserCourseController extends Controller
         $courses = User::where('id', Auth::id())->with('courses')->get();
         return response()->json($courses );
     }
-//    public function unregisteredCourse(){
-//
-//        $courses = User::where('id', Auth::id())->with('courses')->get();
-//        return response()->json($courses );
-//    }
 
     public function unregisteredCourse()
     {
-//        $courses = Course::where('user_id',  Auth::id())->with('courses')->get();
-        $courses = Course::with('users')->where('id' )->get();
+        $userId = Auth::id();
+        $courses = Course::whereDoesntHave('users', function ($q) use ($userId) {
+            $q->where('users.id', $userId);
+        })->get();
         return response()->json($courses);
     }
 
