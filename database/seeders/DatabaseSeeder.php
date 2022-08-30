@@ -42,31 +42,31 @@ class DatabaseSeeder extends Seeder
 //            'reg_token'=>'Laravel',
 //            'role'=>'student'
 //        ]);
-//        Course::create([
-//            'name'=>'Course 1'
-//        ]);
-//        Course::create([
-//            'name'=>'Course 2'
-//        ]);
-//        Course::create([
-//            'name'=>'Course 3'
-//        ]);
-//        Course::create([
-//            'name'=>'Course 4'
-//        ]);
-//
-//        Subject::create([
-//            'name'=>'Mathematics'
-//        ]);
-//        Subject::create([
-//            'name'=>'Physics'
-//        ]);
-//        Subject::create([
-//            'name'=>'Chemistry'
-//        ]);
-//        Subject::create([
-//            'name'=>'History'
-//        ]);
+        Course::create([
+            'name'=>'Course 1'
+        ]);
+        Course::create([
+            'name'=>'Course 2'
+        ]);
+        Course::create([
+            'name'=>'Course 3'
+        ]);
+        Course::create([
+            'name'=>'Course 4'
+        ]);
+
+        Subject::create([
+            'name'=>'Mathematics'
+        ]);
+        Subject::create([
+            'name'=>'Physics'
+        ]);
+        Subject::create([
+            'name'=>'Chemistry'
+        ]);
+        Subject::create([
+            'name'=>'History'
+        ]);
     }
 
 }
