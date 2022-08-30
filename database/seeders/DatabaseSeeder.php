@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'name'=>'admin',
             'email'=>'superadmin@mail.ru',
             'password'=>'$2a$12$HEtD2CggESmYr5Zf5fdXe.am0CaS14YjEoMYVnFQT8QW7KLR5fRWe',
-            'mobile'=>'099998',
+            'mobile'=>'09999812',
             'reg_token'=>'Laravel',
             'role'=>'admin'
         ]);
