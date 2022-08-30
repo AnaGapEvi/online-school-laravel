@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         User::create([
             'name'=>'admin',
-            'email'=>'superadmin@mail.ru',
+            'email'=>'admin@mail.ru',
             'password'=>'$2a$12$HEtD2CggESmYr5Zf5fdXe.am0CaS14YjEoMYVnFQT8QW7KLR5fRWe',
-            'mobile'=>'09999812',
+            'mobile'=>'09999999',
             'reg_token'=>'Laravel',
             'role'=>'admin'
         ]);
