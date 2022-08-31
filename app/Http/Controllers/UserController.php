@@ -63,8 +63,19 @@ class UserController extends Controller
         $user->email=$request->email;
         $user->mobile=$request->mobile;
         $user->password=Hash::make($request->password);
+
+
         $user->save();
 
+
+        if($course = $user->courses->first()){
+            $course->course_id = $request->courseId;
+            $course->save();
+        }else {
+            $course = new CourseUser();
+            $course->course_id = $request->couereId;
+            $course->user_id = Auth::id();
+        }
         return 'Teacher updated';
     }
 
