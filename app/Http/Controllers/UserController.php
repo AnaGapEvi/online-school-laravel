@@ -68,15 +68,15 @@ class UserController extends Controller
         $user->save();
 
 
-        if($course = $user->courses->first()){
-            $course->course_id = $request->courseId;
-            $course->save();
-        }else {
-            $course = new CourseUser();
-            $course->course_id = $request->courseId;
-            $course->user_id = Auth::id();
-            $course->save();
-        }
+//        if($course = $user->courses->first()){
+//            $course->course_id = $request->courseId;
+//            $course->save();
+//        }else {
+//            $course = new CourseUser();
+//            $course->course_id = $request->courseId;
+//            $course->user_id = Auth::id();
+//            $course->save();
+//        }
         return 'Teacher updated';
     }
 
