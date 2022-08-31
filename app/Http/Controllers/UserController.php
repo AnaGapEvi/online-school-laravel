@@ -73,7 +73,7 @@ class UserController extends Controller
             $course->save();
         }else {
             $course = new CourseUser();
-            $course->course_id = $request->couereId;
+            $course->course_id = $request->courseId;
             $course->user_id = Auth::id();
             $course->save();
         }
