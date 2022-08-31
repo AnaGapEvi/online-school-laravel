@@ -75,6 +75,7 @@ class UserController extends Controller
             $course = new CourseUser();
             $course->course_id = $request->couereId;
             $course->user_id = Auth::id();
+            $course->save();
         }
         return 'Teacher updated';
     }
