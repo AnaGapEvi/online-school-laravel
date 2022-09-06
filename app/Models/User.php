@@ -60,10 +60,14 @@ class User extends Authenticatable
         return $this->hasMany(Course::class);
     }
 
-
     public function courses()
     {
         return $this->belongsToMany(Course::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
     }
 
     public function assignments(): HasMany

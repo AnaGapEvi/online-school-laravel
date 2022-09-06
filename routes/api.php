@@ -34,7 +34,12 @@ Route::get('/courses', [CourseController::class, 'index']);
 
 
 Route::middleware('auth:api')->group(function () {
+    Route::post('/update-profile', [UserController::class, 'update']);
+
+
+
     Route::get('me', [UserController::class, 'me']);
+    Route::get('me-data', [UserController::class, 'meData']);
     Route::get('/students-course', [UserController::class, 'studentTeacherCourse']);
     Route::get('students-count', [UserController::class, 'studentsCount']);
     Route::get('/get-user-information', [UserController::class, 'getUserInformation']);
