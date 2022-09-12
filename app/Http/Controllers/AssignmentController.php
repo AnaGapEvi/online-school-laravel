@@ -55,7 +55,6 @@ class AssignmentController extends Controller
 
     public function assignmentCourse()
     {
-        $user = Auth::user();
         $courses=CourseUser::where('user_id', Auth::id())->get();
         return response()->json($courses);
     }
@@ -86,9 +85,6 @@ class AssignmentController extends Controller
         return response()->json($assignments);
     }
 
-    protected function normalizeGuessedAbilityName($ability)
-    {
-    }//verified assignment
     public function verified()
     {
         $assignments = Assignment::where('chucked', true)->get();
@@ -114,7 +110,6 @@ class AssignmentController extends Controller
         }
     }
 
-    ///////create assignment
     public function store(Request $request)
     {
         $validator = $request->validate([
@@ -154,7 +149,7 @@ class AssignmentController extends Controller
 
     }
 
-    ////////get one assignment
+
     public function getAssignment($id)
     {
         $assignment = Assignment::find($id);
@@ -162,7 +157,6 @@ class AssignmentController extends Controller
         return response()->json($assignment);
     }
 
-    //// edit assignment
     public function editAssignment(Request $request, $id)
     {
         $assignment = Assignment::find($id);
