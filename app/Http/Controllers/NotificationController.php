@@ -12,13 +12,23 @@ class NotificationController extends Controller
 {
     public function store(Request $request)
     {
-        $notification = new Notification();
-        $notification->title = $request->title;
-        $notification->body = $request->body;
-        $notification->user_id=Auth::id();
-        $notification->course_id='1';
-        $notification->save();
-        return response()->json($notification);
+        $validator = $request->validate([
+            'title'=>'required',
+            'body'=>'required|min:8',
+
+        ]);
+
+        if($validator) {
+            $notification = new Notification();
+            $notification->title = $request->title;
+            $notification->body = $request->body;
+            $notification->user_id=Auth::id();
+            $notification->course_id='1';
+            $notification->save();
+            return response()->json($notification);
+        } else {
+            return 'validator error';
+        }
     }
 
     public function index()

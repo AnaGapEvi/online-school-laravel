@@ -23,14 +23,12 @@ class AssignmentController extends Controller
         return response()->json($assignment);
     }
 
-    ///get 1 task
     public function getTAsk($id)
     {
         $task = Assignment::find($id)->where('id', $id)->with(['student_assignment', 'user'])->get();
         return response()->json($task);
     }
 
-    //get user task list
     public function userTasksList()
     {
         $user = auth()->user();
@@ -153,7 +151,6 @@ class AssignmentController extends Controller
     public function getAssignment($id)
     {
         $assignment = Assignment::find($id);
-
         return response()->json($assignment);
     }
 
@@ -163,7 +160,6 @@ class AssignmentController extends Controller
         $assignment->update($request->all());
 
         return response()->json($assignment);
-
     }
 
     public function destroy(Assignment $assignment, $id)
