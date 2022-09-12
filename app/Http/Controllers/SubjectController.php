@@ -16,15 +16,6 @@ class SubjectController extends Controller
         return $teschers;
     }
 
-
-
-
-
-
-
-
-
-
     public function index(){
         $subjects = Subject::get();
         return response()->json($subjects);
@@ -36,11 +27,7 @@ class SubjectController extends Controller
         $subject->save();
 
         return response()->json($subject);
-
     }
-
-
-
 
     public function destroy(Subject $subject, $id){
         $subject = Subject::find($id);

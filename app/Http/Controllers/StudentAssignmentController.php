@@ -47,6 +47,7 @@ class StudentAssignmentController extends Controller
 
         return $answers;
     }
+
     public function allUnverifiedAnswers()
     {
         $answers = StudentAssignment::with(  ['assignment' => function ($q)  {
@@ -55,6 +56,7 @@ class StudentAssignmentController extends Controller
 
         return $answers;
     }
+
     public function allUnverifiedAnswersUser()
 
     {

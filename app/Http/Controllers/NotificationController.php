@@ -45,13 +45,7 @@ class NotificationController extends Controller
             ->where('id', $user->id)
             ->get();
         return  response()->json($notification);
-
-//        $notification = Notification::query()->with('course')->get();
-//
-//        return $notification;
-//        $courses = User::where('id', Auth::id())->whereHas('courses')->with('courses')->get();
     }
-
 
     public function editNotification(Request $request, $id)
     {

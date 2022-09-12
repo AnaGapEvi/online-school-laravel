@@ -36,14 +36,13 @@ class UserController extends Controller
         return $course;
     }
 
-
-
     public function getTeachers()
     {
         $teachers = User::where('role', 'teacher')->with(['subject', 'courses'])->get();
 
         return response()->json($teachers);
     }
+
     public function getAllUsers()
     {
         $teachers = User::where('role', 'student')->with('courses')->get();
@@ -58,7 +57,6 @@ class UserController extends Controller
 
     public function editTeacher(Request $request, $id)
     {
-//        return $request->all();
         $user = User::find($id);
         $user->name=$request->name;
         $user->email=$request->email;
@@ -66,7 +64,6 @@ class UserController extends Controller
         $user->password=Hash::make($request->password);
 
         $user->save();
-
 
         if($request->courseId){
             $user->courses()->sync($request->category_id);
@@ -134,37 +131,36 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-            $user = Auth::user();
-            $user->name=$request->name;
-            $user->email=$request->email;
-            $user->password = Hash::make($request->password);
-            $user->mobile=$request->mobile;
-            if($request->role_number){
-                $user->role_number=$request->role_number;
-            }
+        $user = Auth::user();
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->password = Hash::make($request->password);
+        $user->mobile=$request->mobile;
+        if($request->role_number){
+            $user->role_number=$request->role_number;
+        }
 
-            $user->save();
-            $user->courses()->sync($request->category_id);
+        $user->save();
+        $user->courses()->sync($request->category_id);
 
         if($request->course_id){
+            $course = CourseUser::create([
+                'course_id'=>$request->course_id,
+                'user_id'=>$user->id
+            ]);
+            $course->save();
+        }
 
-                $course = CourseUser::create([
-                    'course_id'=>$request->course_id,
-                    'user_id'=>$user->id
-                ]);
-                $course->save();
-            }
+        if($request->subject_id){
 
-            if($request->subject_id){
+            $subject = SubjectUser::create([
+                'subject_id'=>$request->subject_id,
+                'user_id'=>$user->id
+            ]);
+            $subject->save();
+        }
 
-                $subject = SubjectUser::create([
-                    'subject_id'=>$request->subject_id,
-                    'user_id'=>$user->id
-                ]);
-                $subject->save();
-            }
-
-            return response()->json(['message' => 'user already updated']);
+        return response()->json(['message' => 'user already updated']);
     }
 
     public function login(Request $request)

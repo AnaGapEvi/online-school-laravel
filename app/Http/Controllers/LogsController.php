@@ -28,11 +28,6 @@ class LogsController extends Controller
     {
        $logs = Logs::orderBy('id', 'DESC')->with('user')->where('page_name', 'LIKE', '%'.$request->keyword.'%')->get();
         return response()->json($logs);
-
-//        return Logs::orderBy('id', 'DESC')->with(['user' => function ($q) use ($request) {
-//                $q->where('name', 'LIKE', '%' . $request->keyword . '%')->get();
-//            }
-//        ]);
     }
 
     public function logs(Request  $request)

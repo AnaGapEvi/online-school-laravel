@@ -14,15 +14,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AssignmentController extends Controller
 {
-
-    ///search assignment
     public function reports(Request $request)
     {
         $start_date = Carbon::parse($request->start);
         $end_date = Carbon::parse($request->end);
         $assignment = Assignment::whereBetween('created_at', [$start_date, $end_date])->where('subject_id', $request->subject_id)->get();
 
-        return     response()->json($assignment);
+        return response()->json($assignment);
     }
 
     ///get 1 task
@@ -59,16 +57,12 @@ class AssignmentController extends Controller
     {
         $user = Auth::user();
         $courses=CourseUser::where('user_id', Auth::id())->get();
-//        $assignment = Assignment::where('course_id', $user->id)->get();
-
         return response()->json($courses);
     }
 
     public function getTasksBySubject(Request $request)
     {
-//            $data = Subject::where('name', 'LIKE',$request->keyword.'%')->->get();
         $data= Subject::with('assignments')->where('name', 'LIKE', '%'.$request->keyword.'%')->get();
-//                $data = Assignment::where('title', 'LIKE','%'.$request->keyword.'%')->get();
         return response()->json($data);
 
     }
@@ -76,7 +70,6 @@ class AssignmentController extends Controller
     {
         $data= User::with('assignments')->where('name', 'LIKE', '%'.$request->keyword.'%')->get();
         return response()->json($data);
-
     }
 
 
@@ -93,7 +86,9 @@ class AssignmentController extends Controller
         return response()->json($assignments);
     }
 
-    //verified assignment
+    protected function normalizeGuessedAbilityName($ability)
+    {
+    }//verified assignment
     public function verified()
     {
         $assignments = Assignment::where('chucked', true)->get();
@@ -101,24 +96,24 @@ class AssignmentController extends Controller
     }
 
 
-        public function assignmentCount()
-        {
-            $assignments = Assignment::where('user_id', Auth::id())->count();
-            if($assignments){
-                return response()->json($assignments);
-            } else {
-                return 'no assignment';
-            }
+    public function assignmentCount()
+    {
+        $assignments = Assignment::where('user_id', Auth::id())->count();
+        if($assignments){
+            return response()->json($assignments);
+        } else {
+            return 'no assignment';
         }
-        public function assignmentTask()
-        {
-            $assignments = Assignment::where('user_id', Auth::id());
+    }
+    public function assignmentTask()
+    {
+        $assignments = Assignment::where('user_id', Auth::id());
+        if($assignments){
+        } else {
+            return 'no assignment';
+        }
+    }
 
-            if($assignments){
-            } else {
-                return 'no assignment';
-            }
-        }
     ///////create assignment
     public function store(Request $request)
     {
@@ -177,7 +172,6 @@ class AssignmentController extends Controller
 
     }
 
-    ////delete assignment
     public function destroy(Assignment $assignment, $id)
     {
         $assignment = Assignment::find($id);
