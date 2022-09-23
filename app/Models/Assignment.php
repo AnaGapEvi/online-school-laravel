@@ -23,12 +23,13 @@ class Assignment extends Model
     ];
 
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function subject(){
+    public function subject(): BelongsTo
+    {
         return $this->belongsTo(Subject::class);
     }
 
@@ -36,10 +37,10 @@ class Assignment extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
     public function student_assignment(): HasMany
     {
         return $this->hasMany(StudentAssignment::class);
     }
-
 
 }

@@ -13,8 +13,4 @@ class SubjectUser extends Model
         'subject_id',
         'user_id'
     ];
-
-
-
-
 }

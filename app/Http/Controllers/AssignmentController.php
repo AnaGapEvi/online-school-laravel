@@ -3,33 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
-use App\Models\Course;
 use App\Models\CourseUser;
-use App\Models\StudentAssignment;
 use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Js;
 
 class AssignmentController extends Controller
 {
-    public function reports(Request $request)
+    public function reports(Request $request): JsonResponse
     {
         $start_date = Carbon::parse($request->start);
         $end_date = Carbon::parse($request->end);
-        $assignment = Assignment::whereBetween('created_at', [$start_date, $end_date])->where('subject_id', $request->subject_id)->get();
+        $assignment = Assignment::whereBetween('created_at', [$start_date, $end_date])
+            ->where('subject_id', $request->subject_id)
+            ->get();
 
         return response()->json($assignment);
     }
 
-    public function getTAsk($id)
+    public function getTAsk(int $id): JsonResponse
     {
         $task = Assignment::find($id)->where('id', $id)->with(['student_assignment', 'user'])->get();
+
         return response()->json($task);
     }
 
-    public function userTasksList()
+    public function userTasksList(): JsonResponse
     {
         $user = auth()->user();
 
@@ -42,69 +45,81 @@ class AssignmentController extends Controller
         }])
             ->where('id', $user->id)
             ->get();
+
         return  response()->json($task);
     }
 
-    public function assignmentTeacher()
+    public function assignmentTeacher(): JsonResponse
     {
         $assignments = Assignment::where('user_id', Auth::id())->get();
+
         return response()->json($assignments);
     }
 
-    public function assignmentCourse()
+    public function assignmentCourse(): JsonResponse
     {
         $courses=CourseUser::where('user_id', Auth::id())->get();
+
         return response()->json($courses);
     }
 
-    public function getTasksBySubject(Request $request)
+    public function getTasksBySubject(Request $request): JsonResponse
     {
         $data= Subject::with('assignments')->where('name', 'LIKE', '%'.$request->keyword.'%')->get();
-        return response()->json($data);
 
+        return response()->json($data);
     }
-    public function getTasksByTeacherName(Request $request)
+
+    public function getTasksByTeacherName(Request $request): JsonResponse
     {
-        $data= User::with('assignments')->where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+        $data= User::with('assignments')
+            ->where('name', 'LIKE', '%'.$request->keyword.'%')
+            ->get();
+
         return response()->json($data);
     }
 
 
-    public function getTasksByNumber(Request $request)
+    public function getTasksByNumber(Request $request): JsonResponse
     {
-        $data= Assignment::where('id', 'LIKE','%'.$request->keyword.'%')->with('subject')->get();
-        return response()->json($data);
+        $data= Assignment::where('id', 'LIKE','%'.$request->keyword.'%')
+            ->with('subject')
+            ->get();
 
+        return response()->json($data);
     }
 
-    public function assignments()
+    public function assignments(): JsonResponse
     {
         $assignments = Assignment::with('user')->get();
+
         return response()->json($assignments);
     }
 
-    public function verified()
+    public function verified(): JsonResponse
     {
         $assignments = Assignment::where('chucked', true)->get();
+
         return response()->json($assignments);
     }
 
-
-    public function assignmentCount()
+    public function assignmentCount(): JsonResponse
     {
         $assignments = Assignment::where('user_id', Auth::id())->count();
-        if($assignments){
+        if ($assignments) {
             return response()->json($assignments);
         } else {
-            return 'no assignment';
+            return response()->json(['no assignment']);
         }
     }
-    public function assignmentTask()
+
+    public function assignmentTask(): JsonResponse
     {
         $assignments = Assignment::where('user_id', Auth::id());
-        if($assignments){
+        if ($assignments) {
+             'fdsgh';
         } else {
-            return 'no assignment';
+            return response()->json(['no assignment']);
         }
     }
 

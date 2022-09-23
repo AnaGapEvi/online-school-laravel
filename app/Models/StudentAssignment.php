@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class StudentAssignment extends Model
 {
@@ -15,11 +17,13 @@ class StudentAssignment extends Model
         'verified'
     ];
 
-    public function users(){
+    public function users(): BelongsToMany
+    {
         return $this->belongsToMany(User::class);
     }
 
-    public function assignment(){
+    public function assignment(): BelongsTo
+    {
         return $this->belongsTo(Assignment::class);
     }
 }
